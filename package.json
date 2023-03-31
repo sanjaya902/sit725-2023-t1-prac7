@@ -1,0 +1,22 @@
+{
+  "name": "sit725-2023-t1-prac3",
+  "version": "1.0.0",
+  "description": "prac3",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sanjaya902/sit725-2023-t1-prac3.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sanjaya902/sit725-2023-t1-prac3/issues"
+  },
+  "homepage": "https://github.com/sanjaya902/sit725-2023-t1-prac3#readme",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
