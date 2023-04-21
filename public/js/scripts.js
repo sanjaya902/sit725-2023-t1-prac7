@@ -1,16 +1,3 @@
-const cardList = [
-    {
-        title: 'Nature 2', image: 'images/nature2.png', link: 'About Nature 2', description: 'Nature 2 description'
-    },
-    {
-        title: 'Nature 3', image: 'images/nature3.png', link: 'About Nature 3', description: 'Nature 3 description'
-    }
-];
-
-const clickMe = () => {
-    console.log('clickMe clicked');
-}
-
 const addCards = (items) => {
     console.log(items);
     items.forEach(item => {
@@ -21,19 +8,43 @@ const addCards = (items) => {
 
 const submitForm = () => {
     let formData = {};
-    formData.first_name = $('#first_name').val();
-    formData.last_name = $('#last_name').val();
-    formData.email = $('#email').val();
-    formData.password = $('#password').val();
+    formData.title = $('#title').val();
+    formData.image = $('#image').val();
+    formData.link = $('#link').val();
+    formData.description = $('#description').val();
 
     console.log('form data: ', formData);
+    addNature(formData);
 }
+
+const getNature = () => {
+    $.get('/api/nature',(response) => {
+        if(response.statusCode === 200){
+            addCards(response.data);
+        }
+    });
+}
+
+const addNature = (nature) => {
+    $.ajax({
+        url: 'api/nature',
+        data: nature,
+        type: 'POST',
+        success: (result) => {
+            alert(result.message);
+            location.reload();
+
+        }
+    });
+}
+
+
 
 $(document).ready(function(){
     $('.materialboxed').materialbox();
     $('.modal').modal();
 
-    addCards(cardList);
+    getNature();
     $('#formSubmit').click(()=>{
         submitForm();
     })
