@@ -4,6 +4,8 @@ const {MongoClient} = require ('mongodb');
 const uri = 'mongodb+srv://admin:admin@cluster0.2ggyt9o.mongodb.net/?retryWrites=true&w=majority';
 const client = new MongoClient(uri);
 let dbCollection;
+let http = require('http').createServer(app);
+let io = require('socket.io')(http);
 
 app.use(express.static(__dirname+'/public'))
 app.use(express.json());
@@ -49,8 +51,19 @@ function getAllNature(callback) {
     dbCollection.find().toArray(callback);
 }
 
+io.on('connection', (socket)=>{
+    console.log('connected a client');
+    socket.on('disconnect', ()=>{
+        console.log('a client has disconnected');
+    });
+
+    setInterval(()=>{
+        socket.emit('number' + parseInt(Math.random() * 10));
+    }, 1000);
+});
+
 var port = process.env.port || 3000;
-app.listen(port, ()=>{
+http.listen(port, ()=>{
     console.log('App listening to: '+port)
     dbConnection('Nature');
 })
